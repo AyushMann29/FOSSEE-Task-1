@@ -9,7 +9,7 @@
     > pip install -r requirements.txt 
 
 3. Make Migrations and Migrate
-    > python manage.py makemigrations\
+    > python manage.py makemigrations
     > python manage.py migrate
 
 4. Create Super User

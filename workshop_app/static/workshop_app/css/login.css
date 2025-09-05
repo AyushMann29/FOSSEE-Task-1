@@ -1,0 +1,106 @@
+/* login.css */
+
+/* General page styling */
+body {
+    background-color: #f0f2f5;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+/* Main container for the login form */
+.login-container {
+    background-color: #ffffff;
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+}
+
+h2 {
+    color: #333;
+    margin-top: 0;
+    margin-bottom: 10px;
+    font-size: 28px;
+    font-weight: 600;
+}
+
+.login-message {
+    color: #666;
+    margin-bottom: 30px;
+    font-size: 16px;
+}
+
+/* Form styling */
+.login-form .form-group {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.login-form label {
+    display: block;
+    font-size: 14px;
+    color: #555;
+    margin-bottom: 8px;
+    font-weight: 500;
+}
+
+.login-form input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 16px;
+    box-sizing: border-box; /* Ensures padding doesn't affect width */
+    transition: border-color 0.3s;
+}
+
+.login-form input:focus {
+    outline: none;
+    border-color: #007bff;
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25);
+}
+
+.login-button {
+    width: 100%;
+    padding: 12px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    font-size: 18px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.login-button:hover {
+    background-color: #0056b3;
+}
+
+/* Links and extra info */
+.forgot-password, .signup-link {
+    margin-top: 15px;
+}
+
+.forgot-password a, .signup-link a {
+    color: #007bff;
+    text-decoration: none;
+    font-size: 14px;
+    transition: color 0.3s;
+}
+
+.forgot-password a:hover, .signup-link a:hover {
+    color: #0056b3;
+    text-decoration: underline;
+}
+
+.signup-link {
+    font-size: 14px;
+    color: #666;
+}

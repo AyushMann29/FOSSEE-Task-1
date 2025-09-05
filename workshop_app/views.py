@@ -72,8 +72,6 @@ def index(request):
 def user_login(request):
     """User Login"""
     user = request.user
-    if user.is_superuser:
-        return redirect('/admin')
     if user.is_authenticated:
         return redirect(get_landing_page(user))
 
@@ -101,8 +99,6 @@ def user_logout(request):
 
 def activate_user(request, key=None):
     user = request.user
-    if user.is_superuser:
-        return redirect("/admin")
     if key is None:
         if user.is_authenticated and not user.profile.is_email_verified and \
                 timezone.now() > user.profile.key_expiry_time:
@@ -269,8 +265,6 @@ def propose_workshop(request):
     """Coordinator proposed a workshop and date"""
 
     user = request.user
-    if user.is_superuser:
-        return redirect("/admin")
     if is_instructor(user):
         return redirect(get_landing_page(user))
     else:
@@ -313,8 +307,6 @@ def propose_workshop(request):
 def workshop_type_details(request, workshop_type_id):
     """Gives the types of workshop details """
     user = request.user
-    if user.is_superuser:
-        return redirect("/admin")
 
     workshop_type = WorkshopType.objects.filter(id=workshop_type_id)
     if workshop_type.exists():
@@ -400,8 +392,6 @@ def workshop_type_tnc(request, workshop_type_id):
 def workshop_type_list(request):
     """Gives the details for types of workshops."""
     user = request.user
-    if user.is_superuser:
-        return redirect("/admin")
 
     workshop_types = WorkshopType.objects.get_queryset().order_by("id")
 
@@ -477,8 +467,6 @@ def view_profile(request, user_id):
 def view_own_profile(request):
     """User can view own profile """
     user = request.user
-    if user.is_superuser:
-        return redirect("admin")
     profile = user.profile
     if request.method == 'POST':
         form = ProfileForm(request.POST, user=user, instance=profile)
