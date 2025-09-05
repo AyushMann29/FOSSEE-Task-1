@@ -1,0 +1,92 @@
+{% extends 'workshop_app/base.html' %}
+{% load static %}
+
+{% block title %}
+    Edit Workshop Type
+{% endblock %}
+
+{% block extra-dependencies %}
+{% endblock %}
+
+{% block extra-custom-scripts %}
+    <script src="{% static 'workshop_app/js/jquery.formset.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <h2 class="text-center my-4">Edit Workshop Type</h2>
+        <form method="post" enctype="multipart/form-data" class="shadow p-4 bg-white rounded">
+            <div class="form-group row">
+                <label class="col-sm-3 col-form-label font-weight-bold">Workshop Name:</label>
+                <div class="col-sm-9">
+                    {{ form.name }}
+                    <small class="text-danger">{{ form.name.errors }}</small>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-sm-3 col-form-label font-weight-bold">Duration:</label>
+                <div class="col-sm-9">
+                    {{ form.duration }}
+                    <small class="form-text text-muted">{{ form.duration.help_text }}</small>
+                    <small class="text-danger">{{ form.duration.errors }}</small>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-sm-3 col-form-label font-weight-bold">Description:</label>
+                <div class="col-sm-9">
+                    {{ form.description }}
+                    <small class="text-danger">{{ form.description.errors }}</small>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-sm-3 col-form-label font-weight-bold">Terms and Conditions:</label>
+                <div class="col-sm-9">
+                    {{ form.terms_and_conditions }}
+                    <small class="text-danger">{{ form.terms_and_conditions.errors }}</small>
+                </div>
+            </div>
+
+            <h4 class="text-center my-4">Attachments</h4>
+            {{ form_file.management_form }}
+            {{ form_file.non_form_errors }}
+            {% for form in form_file %}
+                <div class="border p-3 mb-3 rounded">
+                    <div class="form-row">
+                        <div class="col-md-11">
+                            {% for field in form %}
+                                <div class="form-group">
+                                    {{ field }}
+                                </div>
+                            {% endfor %}
+                        </div>
+                        {% if form.id.value %}
+                        <div class="col-md-1 text-right">
+                            <a href="{% url 'workshop_app:delete_attachment_file' form.id.value %}" class="btn btn-danger btn-sm">Delete</a>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+            {% endfor %}
+
+            <div class="form-group text-right">
+                <button type="submit" class="btn btn-primary">Save</button>
+            </div>
+        </form>
+    </div>
+
+    <script type="text/javascript">
+        $(function () {
+            $(".inline.{{ form_file.prefix }}").formset({
+                prefix: "{{ form_file.prefix }}",
+                addCssClass: "btn btn-primary btn-sm mt-2",
+                deleteCssClass: "hidden",
+                addText: 'Add another attachment',
+                deleteText: '',
+                formCssClass: 'inline-form'
+            });
+        });
+    </script>
+{% endblock %}
