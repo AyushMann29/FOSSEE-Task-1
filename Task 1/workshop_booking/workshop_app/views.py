@@ -453,10 +453,12 @@ def view_profile(request, user_id):
     """Instructor can view coordinator profile """
     user = request.user
     if is_instructor(user) and is_email_checked(user):
-        coordinator_profile = Profile.objects.get(user_id=user_id)
-        workshops = Workshop.objects.filter(coordinator=user_id).order_by(
-            'date')
-
+        try:
+            coordinator_profile = Profile.objects.get(user_id=user_id)
+        except Profile.DoesNotExist:
+            messages.error(request, "Profile does not exist for this user.")
+            return redirect(get_landing_page(user))
+        workshops = Workshop.objects.filter(coordinator=user_id).order_by('date')
         return render(request, "workshop_app/view_profile.html",
                       {"coordinator_profile": coordinator_profile,
                        "Workshops": workshops})
@@ -467,7 +469,11 @@ def view_profile(request, user_id):
 def view_own_profile(request):
     """User can view own profile """
     user = request.user
-    profile = user.profile
+    try:
+        profile = user.profile
+    except Profile.DoesNotExist:
+        messages.error(request, "Profile does not exist for your account. Please contact admin.")
+        return redirect(get_landing_page(user))
     if request.method == 'POST':
         form = ProfileForm(request.POST, user=user, instance=profile)
         if form.is_valid():
