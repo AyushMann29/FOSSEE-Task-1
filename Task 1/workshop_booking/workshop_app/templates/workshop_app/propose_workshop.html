@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block title %}
-    Propose a workshop
+    Propose a Workshop
 {% endblock %}
 
 {% block extra-dependencies %}
@@ -13,13 +13,13 @@
 
 {% block extra-custom-scripts %}
     <script>
-        var dateToday = new Date();
-        var upto = new Date();
-
-        dateToday.setDate(dateToday.getDate() + 3);
-        upto.setFullYear(dateToday.getFullYear() + 1);
-
         $(function () {
+            const dateToday = new Date();
+            const upto = new Date();
+
+            dateToday.setDate(dateToday.getDate() + 3);
+            upto.setFullYear(dateToday.getFullYear() + 1);
+
             $(".datepicker").datepicker({
                 changeMonth: true,
                 changeYear: true,
@@ -28,79 +28,124 @@
                 beforeShowDay: $.datepicker.noWeekends,
             });
 
-
             $('#disp_tnc').click(function (e) {
-                e.preventDefault()
-                if ($('#id_workshop_type').val() === '')
-                    $('.modal-body').html("<p class='text-danger'>Please select a workshop type</p>")
-                else {
+                e.preventDefault();
+                const workshopType = $('#id_workshop_type').val();
+                if (!workshopType) {
+                    $('.modal-body').html("<p class='text-danger'>Please select a workshop type</p>");
+                } else {
                     $.ajax({
-                        url: '/workshop/type_tnc/' + $('#id_workshop_type').val(),
+                        url: '/workshop/type_tnc/' + workshopType,
                         success: function (data) {
-                            $('.modal-body').html(data.tnc)
+                            $('.modal-body').html(data.tnc);
                         }
-                    })
+                    });
                 }
-            })
+            });
         });
     </script>
 {% endblock %}
 
-
 {% block content %}
-    <style type="text/css">
+    <style>
         .errorlist {
             color: red;
         }
 
-    .modal-open .modal{
-        overflow-y: hidden;
-    }
+        .modal-open .modal {
+            overflow-y: hidden;
+        }
+
+        .container {
+            margin-top: 50px;
+        }
+
+        .card {
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        .card-header {
+            background-color: #007bff;
+            color: white;
+            text-align: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .card-body {
+            padding: 20px;
+        }
+
+        .btn-success {
+            background-color: #28a745;
+            border-color: #28a745;
+        }
+
+        .btn-success:hover {
+            background-color: #218838;
+            border-color: #1e7e34;
+        }
+
+        .alert-info {
+            font-size: 1rem;
+            font-weight: bold;
+        }
+
+        .modal-header {
+            background-color: #007bff;
+            color: white;
+        }
+
+        .modal-title {
+            font-size: 1.25rem;
+        }
     </style>
 
-    <div class="container" align="center">
-        <div class="alert alert-info">
-            Note: Before proposing the workshop, please check about the workshop in the
-            <strong>Workshop Types</strong> section
+    <div class="container">
+        <div class="alert alert-info text-center">
+            Note: Before proposing the workshop, please check the <strong>Workshop Types</strong> section.
         </div>
-        <br><br>
-        <div class="col-md-6 col-md-offset-6">
-            <div class="card border-primary">
-                <div class="card-header">
-                    <h3>Propose Workshop</h3>
-                </div>
-                <div class="card-body">
-                    <div class="form-group">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card border-primary">
+                    <div class="card-header">
+                        Propose Workshop
+                    </div>
+                    <div class="card-body">
                         <form method="post">
                             {% csrf_token %}
-                            <br/>
-                            {{ form.workshop_type }}
-                            <br>
-                            {{ form.date }}
-                            <br>
-                            {{ form.tnc_accepted }} I accept the
-                            <a href="#" id="disp_tnc" data-toggle="modal"
-                            data-target="#exampleModalCenter">
-                                terms and conditions
-                            </a>
-                            <br>
+                            <div class="form-group">
+                                {{ form.workshop_type }}
+                            </div>
+                            <div class="form-group">
+                                {{ form.date }}
+                            </div>
+                            <div class="form-group">
+                                {{ form.tnc_accepted }}
+                                <label>
+                                    I accept the
+                                    <a href="#" id="disp_tnc" data-toggle="modal" data-target="#exampleModalCenter">
+                                        terms and conditions
+                                    </a>
+                                </label>
+                            </div>
                             {% if form.errors %}
-                                <br>
-                                <div style="text-align: left; border: 1px solid red; padding-top: 5px">
-                                    <h5 style="text-align: center; color: red; font-weight: bolder">Errors</h5>
+                                <div class="alert alert-danger">
+                                    <h5 class="text-center">Errors</h5>
                                     {{ form.errors }}
                                 </div>
                             {% endif %}
-                            <br>
-                            <button class="btn btn-success" type="submit">Submit</button>
+                            <div class="text-center">
+                                <button class="btn btn-success" type="submit">Submit</button>
+                            </div>
                         </form>
                     </div>
                 </div>
             </div>
         </div>
-        <br>
-
     </div>
+
     <!-- Modal -->
     <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
          aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -113,7 +158,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-
+                    <!-- Content will be dynamically loaded -->
                 </div>
             </div>
         </div>

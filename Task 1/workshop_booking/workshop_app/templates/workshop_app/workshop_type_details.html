@@ -1,32 +1,37 @@
 {% extends 'workshop_app/base.html' %}
 
 {% block title %}
-    View Workshop details
+    Workshop Details
 {% endblock %}
 
 {% block content %}
-    <div class="container">
-        <h2 class="text-center m-3">Workshop Details</h2>
-        <table class="table table-hover">
-            <tr class="d-flex">
-                <th class="col-3">Workshop Name :</th>
-                <td class="col">{{ workshop_type.name }}</td>
-            </tr>
-            <tr class="d-flex">
-                <th class="col-3">Duration :</th>
-                <td class="col">{{ workshop_type.duration }} day(s)</td>
-            </tr>
-            <tr class="d-flex">
-                <th class="col-3">Description :</th>
-                <td class="col">{{ workshop_type.description }}</td>
-            </tr>
-            <tr class="d-flex">
-                <th class="col-3">Terms and Conditions :</th>
-                <td class="col">{{ workshop_type.terms_and_conditions }}</td>
-            </tr>
-        </table>
+    <div class="container my-5">
+        <div class="card shadow-sm">
+            <div class="card-header bg-primary text-white text-center">
+                <h2 class="mb-0">Workshop Details</h2>
+            </div>
+            <div class="card-body">
+                <table class="table table-borderless">
+                    <tbody>
+                        <tr>
+                            <th class="text-end text-muted" style="width: 30%;">Workshop Name:</th>
+                            <td>{{ workshop_type.name }}</td>
+                        </tr>
+                        <tr>
+                            <th class="text-end text-muted">Duration:</th>
+                            <td>{{ workshop_type.duration }} day(s)</td>
+                        </tr>
+                        <tr>
+                            <th class="text-end text-muted">Description:</th>
+                            <td>{{ workshop_type.description }}</td>
+                        </tr>
+                        <tr>
+                            <th class="text-end text-muted">Terms and Conditions:</th>
+                            <td>{{ workshop_type.terms_and_conditions }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
-
 {% endblock %}
-
-
